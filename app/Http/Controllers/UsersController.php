@@ -29,7 +29,10 @@ class UsersController extends Controller
 	{
 		// var_dump(compact('user'));exit;
 		// var_dump($user::gravatar());exit();
-	    return view('users.show', compact('user'));
+	    $statuses = $user->statuses()
+                           ->orderBy('created_at', 'desc')
+                           ->paginate(10);
+        return view('users.show', compact('user', 'statuses'));
 	}
 
 	public function store(Request $request)
